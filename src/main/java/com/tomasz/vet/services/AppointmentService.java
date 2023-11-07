@@ -1,9 +1,11 @@
 package com.tomasz.vet.services;
 
 import com.tomasz.vet.entities.Appointment;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
+
 public interface AppointmentService {
     Appointment create(Appointment appointment);
+
+    Optional<Appointment> findOne(Long id);
 }

@@ -4,7 +4,9 @@ import com.tomasz.vet.dto.AppointmentDto;
 import com.tomasz.vet.entities.Appointment;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AppointmentMapper implements Mapper<Appointment, AppointmentDto> {
 
     private final ModelMapper modelMapper;

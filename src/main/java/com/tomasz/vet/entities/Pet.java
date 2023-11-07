@@ -2,6 +2,7 @@ package com.tomasz.vet.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name="pets")
 public class Pet {
     @Id
@@ -19,17 +21,13 @@ public class Pet {
     private Long id;
 
     private String name;
-    private Date birthDate;
+    private String birthDate;
     private Boolean isMale;
-    private String chip_nr;
+    private String chipNr;
     private String race;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
     private PetOwner owner;
-
-    @OneToMany
-    @JoinColumn(name="appointment_id")
-    private Appointment appointment;
 
 }

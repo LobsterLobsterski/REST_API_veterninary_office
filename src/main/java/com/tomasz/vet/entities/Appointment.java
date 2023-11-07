@@ -20,14 +20,15 @@ public class Appointment {
     @Column(name="appointment_id")
     private long id;
 
-    private Date registrationDate;
-    private Date appointmentDate;
+    //ISO 8601 -> yyyy-MM-dd
+    private String registrationDate;
+    private String appointmentDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vet_id")
     private Veterinarian veterinarian;
 }

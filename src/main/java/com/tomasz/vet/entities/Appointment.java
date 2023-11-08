@@ -18,11 +18,10 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_id_seq")
     @Column(name="appointment_id")
-    private long id;
+    private Long id;
 
-    //ISO 8601 -> yyyy-MM-dd
-    private String registrationDate;
-    private String appointmentDate;
+    private Date registrationDate;
+    private Date appointmentDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")

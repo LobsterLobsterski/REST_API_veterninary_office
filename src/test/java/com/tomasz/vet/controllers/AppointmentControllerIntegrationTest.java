@@ -3,9 +3,6 @@ package com.tomasz.vet.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
 import com.tomasz.vet.entities.Appointment;
-import com.tomasz.vet.entities.Pet;
-import com.tomasz.vet.entities.PetOwner;
-import com.tomasz.vet.entities.Veterinarian;
 import com.tomasz.vet.services.AppointmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
@@ -38,23 +36,40 @@ public class AppointmentControllerIntegrationTest {
     }
 
     @Test
-    public void testThatCreateAppointmentReturnsHttpCreatedWhenCreated() throws Exception {
-        PetOwner ownerA = TestDataUtil.createOwnerA();
-        Pet petA = TestDataUtil.createPetA(ownerA);
-        Veterinarian vetA = TestDataUtil.createVetA();
-        Appointment appointmentA = TestDataUtil.createAppointmentA(petA, vetA);
-
-        String appointmentJson = objectMapper.writeValueAsString(appointmentA);
-
-        System.out.println(appointmentJson);
+    public void testThatCreatingAppointmentReturnsHttp201() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        String json = objectMapper.writeValueAsString(appointment);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(appointmentJson)
-        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber()
-                //add the rest
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isCreated()
+        ).andDo(MockMvcResultHandlers.print()
         );
-
     }
+
+    @Test
+    public void testThatCreatingAppointmentReturnsCreatedAppointment() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        String json = objectMapper.writeValueAsString(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/appointment")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.registrationDate").value(appointment.getRegistrationDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.appointmentDate").value(appointment.getAppointmentDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.pet").value(appointment.getPet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.veterinarian").value(appointment.getVeterinarian())
+        );
+    }
+
 
 }

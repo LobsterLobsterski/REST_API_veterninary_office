@@ -71,5 +71,52 @@ public class AppointmentControllerIntegrationTest {
         );
     }
 
+    @Test
+    public void testThatFindOneAppointmentReturnsHttp200WhenExists() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        appointmentService.create(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFindOneAppointmentReturnsHttp404WhenDoesntExists() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        //appointmentService.create(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFindOneAppointmentReturnsCorrectAppointment() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        Appointment saved = appointmentService.create(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/appointment/"+saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(saved.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.registrationDate").value(saved.getRegistrationDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.appointmentDate").value(saved.getAppointmentDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.pet").value(saved.getPet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.veterinarian").value(saved.getVeterinarian())
+        );
+
+    }
+
 
 }

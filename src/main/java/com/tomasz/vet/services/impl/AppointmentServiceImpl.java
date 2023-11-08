@@ -24,6 +24,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Optional<Appointment> findOne(Long id) {
+        if (!appointmentRepository.existsById(id)){
+            return Optional.empty();
+        }
         return appointmentRepository.findById(id);
     }
 }

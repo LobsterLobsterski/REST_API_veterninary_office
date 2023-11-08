@@ -1,8 +1,7 @@
 package com.tomasz.vet.dto;
 
-import com.tomasz.vet.entities.Pet;
-import com.tomasz.vet.entities.Veterinarian;
-import jakarta.persistence.*;
+import com.tomasz.vet.entities.PetEntity;
+import com.tomasz.vet.entities.VeterinarianEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +18,6 @@ public class AppointmentDto {
     private long id;
     private Date registrationDate;
     private Date appointmentDate;
-    private Pet pet;
-    private Veterinarian veterinarian;
+    private PetEntity pet;
+    private VeterinarianEntity veterinarian;
 }

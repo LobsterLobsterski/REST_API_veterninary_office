@@ -1,4 +1,4 @@
 package com.tomasz.vet.entities;
 
-public class Medicine {
+public class MedicineEntity {
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name="veterinarians")
-public class Veterinarian {
+public class VeterinarianEntity {
     @Id
     @Column(name = "vet_id")
     private Long id;

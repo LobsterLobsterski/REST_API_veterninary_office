@@ -1,6 +1,6 @@
 package com.tomasz.vet.services.impl;
 
-import com.tomasz.vet.entities.Appointment;
+import com.tomasz.vet.entities.AppointmentEntity;
 import com.tomasz.vet.repositories.AppointmentRepository;
 import com.tomasz.vet.services.AppointmentService;
 import org.springframework.data.domain.Page;
@@ -20,12 +20,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Appointment create(Appointment appointment) {
+    public AppointmentEntity create(AppointmentEntity appointment) {
         return appointmentRepository.save(appointment);
     }
 
     @Override
-    public Optional<Appointment> findOne(Long id) {
+    public Optional<AppointmentEntity> findOne(Long id) {
         if (!appointmentRepository.existsById(id)){
             return Optional.empty();
         }
@@ -33,7 +33,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Page<Appointment> findAll(Pageable pageable) {
+    public Page<AppointmentEntity> findAll(Pageable pageable) {
         return appointmentRepository.findAll(pageable);
     }
 }

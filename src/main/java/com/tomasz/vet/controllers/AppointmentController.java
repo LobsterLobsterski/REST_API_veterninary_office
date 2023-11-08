@@ -1,7 +1,7 @@
 package com.tomasz.vet.controllers;
 
 import com.tomasz.vet.dto.AppointmentDto;
-import com.tomasz.vet.entities.Appointment;
+import com.tomasz.vet.entities.AppointmentEntity;
 import com.tomasz.vet.mappers.impl.AppointmentMapper;
 import com.tomasz.vet.services.AppointmentService;
 import org.springframework.data.domain.Page;
@@ -25,15 +25,15 @@ public class AppointmentController {
 
     @PostMapping("/appointment")
     public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentDto appointmentDto){
-        Appointment appointment = appointmentMapper.mapFrom(appointmentDto);
-        Appointment saved = appointmentService.create(appointment);
+        AppointmentEntity appointment = appointmentMapper.mapFrom(appointmentDto);
+        AppointmentEntity saved = appointmentService.create(appointment);
 
         return new ResponseEntity<>(appointmentMapper.mapTo(saved), HttpStatus.CREATED);
     }
 
     @GetMapping("/appointment/{id}")
     public ResponseEntity<AppointmentDto> getOneAppointment(@PathVariable Long id){
-        Optional<Appointment> result = appointmentService.findOne(id);
+        Optional<AppointmentEntity> result = appointmentService.findOne(id);
         if (result.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -42,7 +42,7 @@ public class AppointmentController {
 
     @GetMapping("/appointment")
     public Page<AppointmentDto> getAllAppointments(Pageable pageable){
-        Page<Appointment> result = appointmentService.findAll(pageable);
+        Page<AppointmentEntity> result = appointmentService.findAll(pageable);
 
         return result.map(appointmentMapper::mapTo);
     }

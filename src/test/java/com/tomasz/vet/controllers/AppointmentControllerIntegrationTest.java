@@ -2,7 +2,7 @@ package com.tomasz.vet.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
-import com.tomasz.vet.entities.Appointment;
+import com.tomasz.vet.entities.AppointmentEntity;
 import com.tomasz.vet.services.AppointmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +37,7 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatCreatingAppointmentReturnsHttp201() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
         String json = objectMapper.writeValueAsString(appointment);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/appointment")
@@ -50,7 +50,7 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatCreatingAppointmentReturnsCreatedAppointment() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
         String json = objectMapper.writeValueAsString(appointment);
 
         mockMvc.perform(
@@ -73,7 +73,7 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatFindOneAppointmentReturnsHttp200WhenExists() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
         appointmentService.create(appointment);
 
         mockMvc.perform(
@@ -85,7 +85,7 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatFindOneAppointmentReturnsHttp404WhenDoesntExists() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
         //appointmentService.create(appointment);
 
         mockMvc.perform(
@@ -97,8 +97,8 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatFindOneAppointmentReturnsCorrectAppointment() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
-        Appointment saved = appointmentService.create(appointment);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity saved = appointmentService.create(appointment);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/appointment/"+saved.getId())
@@ -120,8 +120,8 @@ public class AppointmentControllerIntegrationTest {
 
     @Test
     public void testThatFindAllReturnsAPageOfExistingAppointments() throws Exception {
-        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
-        Appointment saved = appointmentService.create(appointment);
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity saved = appointmentService.create(appointment);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/appointment")

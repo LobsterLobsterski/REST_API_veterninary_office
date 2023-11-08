@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @Entity
 @Table(name = "appointments")
-public class Appointment {
+public class AppointmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_id_seq")
     @Column(name="appointment_id")
@@ -25,9 +25,9 @@ public class Appointment {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
-    private Pet pet;
+    private PetEntity pet;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vet_id")
-    private Veterinarian veterinarian;
+    private VeterinarianEntity veterinarian;
 }

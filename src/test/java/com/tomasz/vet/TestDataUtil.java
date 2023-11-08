@@ -1,16 +1,16 @@
 package com.tomasz.vet;
 
-import com.tomasz.vet.entities.Appointment;
-import com.tomasz.vet.entities.Pet;
-import com.tomasz.vet.entities.PetOwner;
-import com.tomasz.vet.entities.Veterinarian;
+import com.tomasz.vet.entities.AppointmentEntity;
+import com.tomasz.vet.entities.PetEntity;
+import com.tomasz.vet.entities.OwnerEntity;
+import com.tomasz.vet.entities.VeterinarianEntity;
 
 import java.util.Date;
 
 public class TestDataUtil {
 
-    public static Appointment createAppointmentA(Pet pet, Veterinarian vet){
-        return Appointment.builder()
+    public static AppointmentEntity createAppointmentA(PetEntity pet, VeterinarianEntity vet){
+        return AppointmentEntity.builder()
                 .id(23L)
                 .appointmentDate(new Date(2023-1900, 11, 23))
                 .registrationDate(new Date(2023-1900, 7, 10))
@@ -19,8 +19,8 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Pet createPetA(PetOwner owner){
-        return Pet.builder()
+    public static PetEntity createPetA(OwnerEntity owner){
+        return PetEntity.builder()
                 .id(1L)
                 .name("Fluffy")
                 .birthDate("2020-6-11")
@@ -32,8 +32,8 @@ public class TestDataUtil {
 
     }
 
-    public static PetOwner createOwnerA(){
-        return PetOwner.builder()
+    public static OwnerEntity createOwnerA(){
+        return OwnerEntity.builder()
                 .id(1L)
                 .phoneNumber("123123123")
                 .name("John")
@@ -42,8 +42,8 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Veterinarian createVetA(){
-        return Veterinarian.builder()
+    public static VeterinarianEntity createVetA(){
+        return VeterinarianEntity.builder()
                 .id(1L)
                 .name("Alex")
                 .surname("Jones")

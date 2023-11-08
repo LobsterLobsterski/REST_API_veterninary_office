@@ -1,15 +1,15 @@
 package com.tomasz.vet.services;
 
-import com.tomasz.vet.entities.Appointment;
+import com.tomasz.vet.entities.AppointmentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 public interface AppointmentService {
-    Appointment create(Appointment appointment);
+    AppointmentEntity create(AppointmentEntity appointment);
 
-    Optional<Appointment> findOne(Long id);
+    Optional<AppointmentEntity> findOne(Long id);
 
-    Page<Appointment> findAll(Pageable pageable);
+    Page<AppointmentEntity> findAll(Pageable pageable);
 }

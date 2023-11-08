@@ -4,6 +4,8 @@ import com.tomasz.vet.dto.AppointmentDto;
 import com.tomasz.vet.entities.Appointment;
 import com.tomasz.vet.mappers.impl.AppointmentMapper;
 import com.tomasz.vet.services.AppointmentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,12 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(appointmentMapper.mapTo(result.get()), HttpStatus.OK);
+    }
+
+    @GetMapping("/appointment")
+    public Page<AppointmentDto> getAllAppointments(Pageable pageable){
+        Page<Appointment> result = appointmentService.findAll(pageable);
+
+        return result.map(appointmentMapper::mapTo);
     }
 }

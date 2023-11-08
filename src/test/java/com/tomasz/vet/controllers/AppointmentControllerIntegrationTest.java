@@ -118,5 +118,28 @@ public class AppointmentControllerIntegrationTest {
 
     }
 
+    @Test
+    public void testThatFindAllReturnsAPageOfExistingAppointments() throws Exception {
+        Appointment appointment = TestDataUtil.createAppointmentA(null, null);
+        Appointment saved = appointmentService.create(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/appointment")
+                        .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.content[0].id").value(saved.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.content[0].registrationDate").value(saved.getRegistrationDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.content[0].appointmentDate").value(saved.getAppointmentDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.content[0].pet").value(saved.getPet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.content[0].veterinarian").value(saved.getVeterinarian())
+        );
+
+    }
+
 
 }

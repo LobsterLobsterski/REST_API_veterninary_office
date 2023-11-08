@@ -3,6 +3,8 @@ package com.tomasz.vet.services.impl;
 import com.tomasz.vet.entities.Appointment;
 import com.tomasz.vet.repositories.AppointmentRepository;
 import com.tomasz.vet.services.AppointmentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,5 +30,10 @@ public class AppointmentServiceImpl implements AppointmentService {
             return Optional.empty();
         }
         return appointmentRepository.findById(id);
+    }
+
+    @Override
+    public Page<Appointment> findAll(Pageable pageable) {
+        return appointmentRepository.findAll(pageable);
     }
 }

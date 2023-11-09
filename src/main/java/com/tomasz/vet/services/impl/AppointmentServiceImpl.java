@@ -36,4 +36,13 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Page<AppointmentEntity> findAll(Pageable pageable) {
         return appointmentRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<AppointmentEntity> fullUpdate(Long id, AppointmentEntity appointmentEntity) {
+        if (!appointmentRepository.existsById(id)){
+            return Optional.empty();
+        }
+        appointmentEntity.setId(id);
+        return Optional.of(appointmentRepository.save(appointmentEntity));
+    }
 }

@@ -12,4 +12,6 @@ public interface AppointmentService {
     Optional<AppointmentEntity> findOne(Long id);
 
     Page<AppointmentEntity> findAll(Pageable pageable);
+
+    Optional<AppointmentEntity> fullUpdate(Long id, AppointmentEntity appointmentEntity);
 }

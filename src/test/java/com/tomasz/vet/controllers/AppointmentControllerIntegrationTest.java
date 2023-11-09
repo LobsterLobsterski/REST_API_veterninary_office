@@ -3,6 +3,7 @@ package com.tomasz.vet.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
 import com.tomasz.vet.entities.AppointmentEntity;
+import com.tomasz.vet.entities.PetEntity;
 import com.tomasz.vet.services.AppointmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -137,6 +138,65 @@ public class AppointmentControllerIntegrationTest {
                 MockMvcResultMatchers.jsonPath("$.content[0].pet").value(saved.getPet())
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.content[0].veterinarian").value(saved.getVeterinarian())
+        );
+
+    }
+
+    @Test
+    public void testThatFullUpdateAppointmentReturnsHttp200WhenExists() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(TestDataUtil.createPetA(TestDataUtil.createOwnerA()), null);
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateAppointmentReturnsHttp404WhenDoesntExists() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        //appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(TestDataUtil.createPetA(TestDataUtil.createOwnerA()), null);
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateAppointmentReturnsUpdatedAppointment() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(TestDataUtil.createPetA(TestDataUtil.createOwnerA()), null);
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.registrationDate").value(appointment2.getRegistrationDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.appointmentDate").value(appointment2.getAppointmentDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.pet").value(appointment2.getPet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.veterinarian").value(appointment2.getVeterinarian())
         );
 
     }

@@ -46,4 +46,16 @@ public class AppointmentController {
 
         return result.map(appointmentMapper::mapTo);
     }
+
+    @PutMapping("/appointment/{id}")
+    public ResponseEntity<AppointmentDto> fullUpdateAppointment(@RequestBody AppointmentDto appointmentDto, @PathVariable Long id){
+        AppointmentEntity appointmentEntity = appointmentMapper.mapFrom(appointmentDto);
+        Optional<AppointmentEntity> updated = appointmentService.fullUpdate(id, appointmentEntity);
+
+        if(updated.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(appointmentMapper.mapTo(updated.get()), HttpStatus.OK);
+
+    }
 }

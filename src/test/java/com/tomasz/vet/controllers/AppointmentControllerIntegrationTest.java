@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -266,6 +268,22 @@ public class AppointmentControllerIntegrationTest {
                 MockMvcResultMatchers.jsonPath("$.veterinarian").value(appointment.getVeterinarian())
         );
 
+    }
+
+    @Test
+    public void testThatDeletingAppointmentRemovesItFromDatabase() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        AppointmentEntity saved = appointmentService.create(appointment);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/appointment/"+saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/appointment/"+saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
     }
 
 }

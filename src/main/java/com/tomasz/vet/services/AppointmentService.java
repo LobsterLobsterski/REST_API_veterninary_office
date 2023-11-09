@@ -16,4 +16,6 @@ public interface AppointmentService {
     Optional<AppointmentEntity> fullUpdate(Long id, AppointmentEntity appointmentEntity);
 
     Optional<AppointmentEntity> partialUpdate(Long id, AppointmentEntity appointment);
+
+    void delete(Long id);
 }

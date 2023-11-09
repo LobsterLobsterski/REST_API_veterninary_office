@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 
 @Service
@@ -44,5 +45,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         appointmentEntity.setId(id);
         return Optional.of(appointmentRepository.save(appointmentEntity));
+    }
+
+    @Override
+    public Optional<AppointmentEntity> partialUpdate(Long id, AppointmentEntity appointment) {
+        if (!appointmentRepository.existsById(id)){
+            return Optional.empty();
+        }
+        appointment.setId(id);
+
+        //get the existing entity, check if the passed dtos attribute is present and if so overwrite the
+        //existing entities attribute
+        return appointmentRepository.findById(id).map(existing -> {
+            Optional.ofNullable(appointment.getRegistrationDate()).ifPresent(existing::setRegistrationDate);
+            Optional.ofNullable(appointment.getAppointmentDate()).ifPresent(existing::setAppointmentDate);
+            Optional.ofNullable(appointment.getPet()).ifPresent(existing::setPet);
+            Optional.ofNullable(appointment.getVeterinarian()).ifPresent(existing::setVeterinarian);
+            return appointmentRepository.save(existing);
+        });
     }
 }

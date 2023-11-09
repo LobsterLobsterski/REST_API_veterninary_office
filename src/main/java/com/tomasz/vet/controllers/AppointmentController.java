@@ -58,4 +58,14 @@ public class AppointmentController {
         return new ResponseEntity<>(appointmentMapper.mapTo(updated.get()), HttpStatus.OK);
 
     }
+
+    @PatchMapping("/appointment/{id}")
+    public ResponseEntity<AppointmentDto> partialUpdateAppointment(@RequestBody AppointmentDto appointmentDto, @PathVariable Long id){
+        AppointmentEntity appointment = appointmentMapper.mapFrom(appointmentDto);
+        Optional<AppointmentEntity> result = appointmentService.partialUpdate(id, appointment);
+        if (result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(appointmentMapper.mapTo(result.get()), HttpStatus.OK);
+    }
 }

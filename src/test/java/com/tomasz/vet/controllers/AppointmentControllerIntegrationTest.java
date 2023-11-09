@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Date;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -201,5 +203,69 @@ public class AppointmentControllerIntegrationTest {
 
     }
 
+    @Test
+    public void testThatPartialUpdateAppointmentReturnsHttp200WhenExists() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(null, null);
+        appointment2.setAppointmentDate(null);
+        appointment2.setRegistrationDate(new Date(12, 12, 12));
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateAppointmentReturnsHttp404WhenDoesntExists() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        //appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(null, null);
+        appointment2.setAppointmentDate(null);
+        appointment2.setRegistrationDate(new Date(12, 12, 12));
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateAppointmentReturnsUpdatedAppointment() throws Exception {
+        AppointmentEntity appointment = TestDataUtil.createAppointmentA(null, null);
+        appointmentService.create(appointment);
+
+        AppointmentEntity appointment2 = TestDataUtil.createAppointmentA(null, null);
+        appointment2.setAppointmentDate(null);
+        appointment2.setRegistrationDate(new Date(12, 12, 12));
+        String json = objectMapper.writeValueAsString(appointment2);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/appointment/"+appointment.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.registrationDate").value(appointment2.getRegistrationDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.appointmentDate").value(appointment.getAppointmentDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.pet").value(appointment.getPet())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.veterinarian").value(appointment.getVeterinarian())
+        );
+
+    }
 
 }

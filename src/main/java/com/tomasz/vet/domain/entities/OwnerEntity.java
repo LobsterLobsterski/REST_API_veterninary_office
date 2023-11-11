@@ -1,4 +1,4 @@
-package com.tomasz.vet.entities;
+package com.tomasz.vet.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,5 @@
-package com.tomasz.vet.dto;
+package com.tomasz.vet.domain.dto;
 
-import com.tomasz.vet.entities.PetEntity;
-import com.tomasz.vet.entities.VeterinarianEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +16,6 @@ public class AppointmentDto {
     private long id;
     private Date registrationDate;
     private Date appointmentDate;
-    private PetEntity pet;
-    private VeterinarianEntity veterinarian;
+    private PetDto pet;
+    private VeterinarianDto veterinarian;
 }

@@ -1,11 +1,9 @@
 package com.tomasz.vet.mappers.impl;
 
-import com.tomasz.vet.dto.MedicineDto;
-import com.tomasz.vet.entities.MedicineEntity;
+import com.tomasz.vet.domain.dto.MedicineDto;
+import com.tomasz.vet.domain.entities.MedicineEntity;
 import com.tomasz.vet.mappers.Mapper;
-import com.tomasz.vet.services.MedicineService;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
 public class MedicineMapper implements Mapper<MedicineEntity, MedicineDto> {
 

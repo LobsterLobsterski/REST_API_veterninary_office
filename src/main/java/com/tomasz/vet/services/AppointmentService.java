@@ -1,6 +1,6 @@
 package com.tomasz.vet.services;
 
-import com.tomasz.vet.entities.AppointmentEntity;
+import com.tomasz.vet.domain.entities.AppointmentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

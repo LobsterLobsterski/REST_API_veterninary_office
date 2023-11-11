@@ -2,8 +2,7 @@ package com.tomasz.vet.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
-import com.tomasz.vet.entities.AppointmentEntity;
-import com.tomasz.vet.entities.PetEntity;
+import com.tomasz.vet.domain.entities.AppointmentEntity;
 import com.tomasz.vet.services.AppointmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

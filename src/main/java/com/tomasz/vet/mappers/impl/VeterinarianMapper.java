@@ -1,11 +1,9 @@
 package com.tomasz.vet.mappers.impl;
 
-import com.tomasz.vet.dto.VeterinarianDto;
-import com.tomasz.vet.entities.VeterinarianEntity;
+import com.tomasz.vet.domain.dto.VeterinarianDto;
+import com.tomasz.vet.domain.entities.VeterinarianEntity;
 import com.tomasz.vet.mappers.Mapper;
-import com.tomasz.vet.services.VeterinarianService;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
 public class VeterinarianMapper implements Mapper<VeterinarianEntity, VeterinarianDto> {
 

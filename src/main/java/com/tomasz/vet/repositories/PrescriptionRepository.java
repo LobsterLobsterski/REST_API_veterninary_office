@@ -1,6 +1,6 @@
 package com.tomasz.vet.repositories;
 
-import com.tomasz.vet.entities.PrescriptionEntity;
+import com.tomasz.vet.domain.entities.PrescriptionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

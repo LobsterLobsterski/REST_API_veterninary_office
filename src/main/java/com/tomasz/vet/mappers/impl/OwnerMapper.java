@@ -1,11 +1,9 @@
 package com.tomasz.vet.mappers.impl;
 
-import com.tomasz.vet.dto.OwnerDto;
-import com.tomasz.vet.entities.OwnerEntity;
+import com.tomasz.vet.domain.dto.OwnerDto;
+import com.tomasz.vet.domain.entities.OwnerEntity;
 import com.tomasz.vet.mappers.Mapper;
-import com.tomasz.vet.services.OwnerService;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
 
 public class OwnerMapper implements Mapper<OwnerEntity, OwnerDto> {

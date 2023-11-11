@@ -1,9 +1,9 @@
 package com.tomasz.vet;
 
-import com.tomasz.vet.entities.AppointmentEntity;
-import com.tomasz.vet.entities.PetEntity;
-import com.tomasz.vet.entities.OwnerEntity;
-import com.tomasz.vet.entities.VeterinarianEntity;
+import com.tomasz.vet.domain.entities.AppointmentEntity;
+import com.tomasz.vet.domain.entities.PetEntity;
+import com.tomasz.vet.domain.entities.OwnerEntity;
+import com.tomasz.vet.domain.entities.VeterinarianEntity;
 
 import java.util.Date;
 

@@ -1,7 +1,7 @@
 package com.tomasz.vet.mappers.impl;
 
-import com.tomasz.vet.dto.AppointmentDto;
-import com.tomasz.vet.entities.AppointmentEntity;
+import com.tomasz.vet.domain.dto.AppointmentDto;
+import com.tomasz.vet.domain.entities.AppointmentEntity;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

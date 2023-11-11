@@ -1,7 +1,7 @@
 package com.tomasz.vet.controllers;
 
-import com.tomasz.vet.dto.AppointmentDto;
-import com.tomasz.vet.entities.AppointmentEntity;
+import com.tomasz.vet.domain.dto.AppointmentDto;
+import com.tomasz.vet.domain.entities.AppointmentEntity;
 import com.tomasz.vet.mappers.impl.AppointmentMapper;
 import com.tomasz.vet.services.AppointmentService;
 import org.springframework.data.domain.Page;

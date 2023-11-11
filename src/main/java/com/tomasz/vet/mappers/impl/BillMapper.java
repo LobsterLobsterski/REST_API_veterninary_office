@@ -1,7 +1,7 @@
 package com.tomasz.vet.mappers.impl;
 
-import com.tomasz.vet.dto.BillDto;
-import com.tomasz.vet.entities.BillEntity;
+import com.tomasz.vet.domain.dto.BillDto;
+import com.tomasz.vet.domain.entities.BillEntity;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
 

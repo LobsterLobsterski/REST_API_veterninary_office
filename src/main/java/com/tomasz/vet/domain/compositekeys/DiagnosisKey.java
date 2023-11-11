@@ -1,4 +1,4 @@
-package com.tomasz.vet.entities.compositekeys;
+package com.tomasz.vet.domain.compositekeys;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

@@ -1,9 +1,5 @@
-package com.tomasz.vet.entities;
+package com.tomasz.vet.domain.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name="veterinarians")
-public class VeterinarianEntity {
-    @Id
-    @Column(name = "vet_id")
+public class VeterinarianDto {
     private Long id;
     private String name;
     private String surname;

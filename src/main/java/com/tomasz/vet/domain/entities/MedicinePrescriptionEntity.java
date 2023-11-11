@@ -1,6 +1,6 @@
-package com.tomasz.vet.entities;
+package com.tomasz.vet.domain.entities;
 
-import com.tomasz.vet.entities.compositekeys.MedicinePrescriptionKey;
+import com.tomasz.vet.domain.compositekeys.MedicinePrescriptionKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +31,7 @@ public class AppointmentEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="vet_id")
     private VeterinarianEntity veterinarian;
+
+    @OneToMany(mappedBy = "appointment")
+    Set<DiagnosisEntity> diagnoses;
 }

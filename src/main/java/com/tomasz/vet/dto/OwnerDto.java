@@ -1,4 +1,4 @@
 package com.tomasz.vet.dto;
 
-public class ProcedureTypeDto {
+public class OwnerDto {
 }

@@ -21,8 +21,11 @@ public class BillEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bill_id_seq")
     @Column(name="bill_id")
     private Long id;
-
     private Date issueDate;
+
+    @OneToOne
+    @JoinColumn(name="appointment_id")
+    private AppointmentEntity appointment;
 
     @ManyToMany
     @JoinTable(name="bill_procedure",

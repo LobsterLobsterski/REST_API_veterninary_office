@@ -66,4 +66,9 @@ public class BillController {
         }
         return new ResponseEntity<>(billMapper.mapTo(result.get()), HttpStatus.OK);
     }
+
+    @DeleteMapping("/bills/{id}")
+    public void deleteBill(@PathVariable Long id){
+        billService.delete(id);
+    }
 }

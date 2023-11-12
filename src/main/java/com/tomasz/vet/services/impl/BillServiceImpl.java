@@ -56,4 +56,9 @@ public class BillServiceImpl implements BillService {
             return existingBill;
         });
     }
+
+    @Override
+    public void delete(Long id) {
+        billRepository.deleteById(id);
+    }
 }

@@ -17,4 +17,6 @@ public interface BillService {
     Optional<BillEntity> fullUpdate(Long id, BillEntity billEntity);
 
     Optional<BillEntity> partialUpdate(Long id, BillEntity billEntity);
+
+    void delete(Long id);
 }

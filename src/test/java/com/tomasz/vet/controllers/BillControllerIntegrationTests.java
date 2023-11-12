@@ -212,5 +212,20 @@ public class BillControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatDeletedBillIsNotPresentInDatabase() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
 
 }

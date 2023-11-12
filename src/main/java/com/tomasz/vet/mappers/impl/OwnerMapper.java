@@ -4,8 +4,9 @@ import com.tomasz.vet.domain.dto.OwnerDto;
 import com.tomasz.vet.domain.entities.OwnerEntity;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class OwnerMapper implements Mapper<OwnerEntity, OwnerDto> {
 
     private final ModelMapper modelMapper;

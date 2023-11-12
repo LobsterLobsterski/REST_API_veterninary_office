@@ -4,7 +4,9 @@ import com.tomasz.vet.domain.dto.MedicineDto;
 import com.tomasz.vet.domain.entities.MedicineEntity;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MedicineMapper implements Mapper<MedicineEntity, MedicineDto> {
 
     private final ModelMapper modelMapper;

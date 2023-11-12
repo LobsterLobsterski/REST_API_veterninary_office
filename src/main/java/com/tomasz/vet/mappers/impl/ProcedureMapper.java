@@ -4,8 +4,9 @@ import com.tomasz.vet.domain.dto.ProcedureDto;
 import com.tomasz.vet.domain.entities.ProcedureEntity;
 import com.tomasz.vet.mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class ProcedureMapper implements Mapper<ProcedureEntity, ProcedureDto> {
 
     private final ModelMapper modelMapper;

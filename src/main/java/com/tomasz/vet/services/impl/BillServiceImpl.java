@@ -33,4 +33,13 @@ public class BillServiceImpl implements BillService {
     public Page<BillEntity> findAll(Pageable pageable) {
         return billRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<BillEntity> fullUpdate(Long id, BillEntity billEntity) {
+        if (!billRepository.existsById(id)){
+            return Optional.empty();
+        }
+        billEntity.setId(id);
+        return Optional.of(billRepository.save(billEntity));
+    }
 }

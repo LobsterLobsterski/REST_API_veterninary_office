@@ -44,4 +44,15 @@ public class BillController {
     public Page<BillDto> findAllBills(Pageable pageable){
         return billService.findAll(pageable).map(billMapper::mapTo);
     }
+
+    @PutMapping("/bills/{id}")
+    public ResponseEntity<BillDto> fullUpdateBill(@PathVariable Long id, @RequestBody BillDto billDto){
+        BillEntity billEntity = billMapper.mapFrom(billDto);
+        Optional<BillEntity> result = billService.fullUpdate(id, billEntity);
+        if (result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(billMapper.mapTo(result.get()), HttpStatus.OK);
+
+    }
 }

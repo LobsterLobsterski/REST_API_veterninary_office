@@ -13,4 +13,6 @@ public interface BillService {
     Optional<BillEntity> findOne(Long id);
 
     Page<BillEntity> findAll(Pageable pageable);
+
+    Optional<BillEntity> fullUpdate(Long id, BillEntity billEntity);
 }

@@ -116,5 +116,54 @@ public class BillControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatFullUpdateBillReturnsHttp200WhenExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateBillReturnsHttp404WhenDoesntExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+//        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/bills/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateBillReturnsUpdatedBill() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saved.getId())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.issueDate").value(billB.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.appointment").value(billB.getAppointment())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.proceduresBilled").value(billB.getProceduresBilled())
+        );
+    }
+
 
 }

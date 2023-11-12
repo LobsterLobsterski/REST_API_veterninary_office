@@ -57,4 +57,13 @@ public class TestDataUtil {
                 .proceduresBilled(procedures)
                 .build();
     }
+
+    public static BillEntity createBillB(AppointmentEntity appointment, Set<ProcedureEntity> procedures){
+        return BillEntity.builder()
+                .id(23L)
+                .issueDate(new Date(2020-1900, 12, 13))
+                .appointment(appointment)
+                .proceduresBilled(procedures)
+                .build();
+    }
 }

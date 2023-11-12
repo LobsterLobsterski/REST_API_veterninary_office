@@ -3,6 +3,7 @@ package com.tomasz.vet.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
 import com.tomasz.vet.domain.entities.BillEntity;
+import com.tomasz.vet.domain.entities.ProcedureEntity;
 import com.tomasz.vet.services.BillService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -57,6 +61,43 @@ public class BillControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.jsonPath("$.issueDate").value(billA.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
         ).andExpect(MockMvcResultMatchers.jsonPath("$.appointment").value(billA.getAppointment())
         ).andExpect(MockMvcResultMatchers.jsonPath("$.proceduresBilled").value(billA.getProceduresBilled())
+        );
+    }
+
+    @Test
+    public void testThatFindOneBillReturnsHttp200WhenExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFindOneBillReturnsHttp404WhenDoesntExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+//        BillEntity saved = billService.create(billA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bills/1")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFindOneBillReturnsFoundBill() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber()
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.issueDate").value(billA.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.appointment").value(billA.getAppointment())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.proceduresBilled").isArray()
         );
     }
 

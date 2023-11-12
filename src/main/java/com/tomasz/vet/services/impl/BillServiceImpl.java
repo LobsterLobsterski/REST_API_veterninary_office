@@ -5,6 +5,8 @@ import com.tomasz.vet.repositories.BillRepository;
 import com.tomasz.vet.services.BillService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BillServiceImpl implements BillService {
 
@@ -17,5 +19,10 @@ public class BillServiceImpl implements BillService {
     @Override
     public BillEntity create(BillEntity billEntity) {
         return billRepository.save(billEntity);
+    }
+
+    @Override
+    public Optional<BillEntity> findOne(Long id) {
+        return billRepository.findById(id);
     }
 }

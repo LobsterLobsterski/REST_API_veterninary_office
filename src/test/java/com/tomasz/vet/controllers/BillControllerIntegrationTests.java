@@ -3,7 +3,6 @@ package com.tomasz.vet.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tomasz.vet.TestDataUtil;
 import com.tomasz.vet.domain.entities.BillEntity;
-import com.tomasz.vet.domain.entities.ProcedureEntity;
 import com.tomasz.vet.services.BillService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -162,6 +158,57 @@ public class BillControllerIntegrationTests {
         ).andExpect(MockMvcResultMatchers.jsonPath("$.issueDate").value(billB.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
         ).andExpect(MockMvcResultMatchers.jsonPath("$.appointment").value(billB.getAppointment())
         ).andExpect(MockMvcResultMatchers.jsonPath("$.proceduresBilled").value(billB.getProceduresBilled())
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdatereturnsHttp200WhenExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        billB.setId(null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/bills/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateReturnsHttp404WhenDoesntExists() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+//        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        billB.setId(null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/bills/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatPartialUpdateReturnsUpdatedBill() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        BillEntity billB = TestDataUtil.createBillB(null, null);
+        billB.setId(null);
+        String json = objectMapper.writeValueAsString(billB);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/bills/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saved.getId())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.issueDate").value(billB.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.appointment").value(saved.getAppointment())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.proceduresBilled").isArray()
         );
     }
 

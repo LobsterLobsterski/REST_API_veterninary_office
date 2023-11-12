@@ -42,4 +42,18 @@ public class BillServiceImpl implements BillService {
         billEntity.setId(id);
         return Optional.of(billRepository.save(billEntity));
     }
+
+    @Override
+    public Optional<BillEntity> partialUpdate(Long id, BillEntity billEntity) {
+        if (!billRepository.existsById(id)){
+            return Optional.empty();
+        }
+        billEntity.setId(id);
+        return billRepository.findById(id).map(existingBill -> {
+            Optional.ofNullable(billEntity.getIssueDate()).ifPresent(existingBill::setIssueDate);
+            Optional.ofNullable(billEntity.getAppointment()).ifPresent(existingBill::setAppointment);
+            Optional.ofNullable(billEntity.getProceduresBilled()).ifPresent(existingBill::setProceduresBilled);
+            return existingBill;
+        });
+    }
 }

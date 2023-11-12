@@ -15,4 +15,6 @@ public interface BillService {
     Page<BillEntity> findAll(Pageable pageable);
 
     Optional<BillEntity> fullUpdate(Long id, BillEntity billEntity);
+
+    Optional<BillEntity> partialUpdate(Long id, BillEntity billEntity);
 }

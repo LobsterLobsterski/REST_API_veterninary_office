@@ -55,4 +55,15 @@ public class BillController {
         return new ResponseEntity<>(billMapper.mapTo(result.get()), HttpStatus.OK);
 
     }
+
+    @PatchMapping("/bills/{id}")
+    public ResponseEntity<BillDto> partialUpdateBill(@PathVariable Long id, @RequestBody BillDto billDto){
+        BillEntity billEntity = billMapper.mapFrom(billDto);
+        Optional<BillEntity> result = billService.partialUpdate(id, billEntity);
+
+        if (result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(billMapper.mapTo(result.get()), HttpStatus.OK);
+    }
 }

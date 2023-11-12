@@ -101,5 +101,20 @@ public class BillControllerIntegrationTests {
         );
     }
 
+    @Test
+    public void testThatFindAllBillsReturnsAPageOfBills() throws Exception {
+        BillEntity billA = TestDataUtil.createBillA(null, null);
+        BillEntity saved = billService.create(billA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bills")
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").isNumber()
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].issueDate").value(billA.getIssueDate().toInstant().toString().substring(0, 19)+".000+00:00")
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].appointment").value(billA.getAppointment())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].proceduresBilled").isArray()
+        );
+    }
+
 
 }

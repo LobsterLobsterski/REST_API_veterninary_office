@@ -4,6 +4,8 @@ import com.tomasz.vet.domain.dto.BillDto;
 import com.tomasz.vet.domain.entities.BillEntity;
 import com.tomasz.vet.mappers.impl.BillMapper;
 import com.tomasz.vet.services.BillService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,10 @@ public class BillController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(billMapper.mapTo(result.get()), HttpStatus.OK);
+    }
+
+    @GetMapping("/bills")
+    public Page<BillDto> findAllBills(Pageable pageable){
+        return billService.findAll(pageable).map(billMapper::mapTo);
     }
 }

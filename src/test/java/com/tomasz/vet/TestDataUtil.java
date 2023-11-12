@@ -1,11 +1,9 @@
 package com.tomasz.vet;
 
-import com.tomasz.vet.domain.entities.AppointmentEntity;
-import com.tomasz.vet.domain.entities.PetEntity;
-import com.tomasz.vet.domain.entities.OwnerEntity;
-import com.tomasz.vet.domain.entities.VeterinarianEntity;
+import com.tomasz.vet.domain.entities.*;
 
 import java.util.Date;
+import java.util.Set;
 
 public class TestDataUtil {
 
@@ -48,6 +46,15 @@ public class TestDataUtil {
                 .name("Alex")
                 .surname("Jones")
                 .position("Head Veterinarian")
+                .build();
+    }
+
+    public static BillEntity createBillA(AppointmentEntity appointment, Set<ProcedureEntity> procedures){
+        return BillEntity.builder()
+                .id(1L)
+                .issueDate(new Date(2023-1900, 11, 23))
+                .appointment(appointment)
+                .proceduresBilled(procedures)
                 .build();
     }
 }

@@ -66,4 +66,24 @@ public class TestDataUtil {
                 .proceduresBilled(procedures)
                 .build();
     }
+
+    public static ProcedureEntity createProcedureA(Set<BillEntity> onBills){
+        return ProcedureEntity.builder()
+                .id(1L)
+                .name("Neutering")
+                .cost(120)
+                .comments(null)
+                .onBills(onBills)
+                .build();
+    }
+
+    public static ProcedureEntity createProcedureB(Set<BillEntity> onBills){
+        return ProcedureEntity.builder()
+                .id(2L)
+                .name("flea removal")
+                .cost(30)
+                .comments("use new product")
+                .onBills(onBills)
+                .build();
+    }
 }

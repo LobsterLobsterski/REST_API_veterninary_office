@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProcedureServiceImpl implements ProcedureService {
 
@@ -24,5 +26,10 @@ public class ProcedureServiceImpl implements ProcedureService {
     @Override
     public Page<ProcedureEntity> findAll(Pageable pageable) {
         return procedureRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<ProcedureEntity> findOne(Long id) {
+        return procedureRepository.findById(id);
     }
 }

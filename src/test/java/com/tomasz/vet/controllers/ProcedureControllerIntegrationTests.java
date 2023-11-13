@@ -77,4 +77,45 @@ public class ProcedureControllerIntegrationTests {
 
         );
     }
+
+    @Test
+    public void testThatFindOneProcedureReturnsHttp200WhenExists() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFindOneProcedureReturnsHttp404WhenDoesntExists() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+//        ProcedureEntity saved = procedureService.create(procedureA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/procedure/1")
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFindOneProcedureReturnsExistingProcedure() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saved.getId())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.name").value(saved.getName())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.cost").value(saved.getCost())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.comments").value(saved.getComments())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.onBills").isArray()
+
+        );
+    }
 }

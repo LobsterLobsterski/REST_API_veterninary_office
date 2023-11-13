@@ -71,7 +71,7 @@ public class TestDataUtil {
         return ProcedureEntity.builder()
                 .id(1L)
                 .name("Neutering")
-                .cost(120)
+                .cost(120f)
                 .comments(null)
                 .onBills(onBills)
                 .build();
@@ -81,7 +81,7 @@ public class TestDataUtil {
         return ProcedureEntity.builder()
                 .id(2L)
                 .name("flea removal")
-                .cost(30)
+                .cost(30f)
                 .comments("use new product")
                 .onBills(onBills)
                 .build();

@@ -41,4 +41,20 @@ public class ProcedureServiceImpl implements ProcedureService {
         procedureEntity.setId(id);
         return Optional.of(procedureRepository.save(procedureEntity));
     }
+
+    @Override
+    public Optional<ProcedureEntity> partialUpdate(Long id, ProcedureEntity procedureEntity) {
+        if (!procedureRepository.existsById(id)){
+            return Optional.empty();
+        }
+        procedureEntity.setId(id);
+        System.out.println("----------------------"+procedureEntity.getCost());
+        return procedureRepository.findById(id).map(existingProcedure -> {
+            Optional.ofNullable(procedureEntity.getName()).ifPresent(existingProcedure::setName);
+            Optional.ofNullable(procedureEntity.getCost()).ifPresent(existingProcedure::setCost);
+            Optional.ofNullable(procedureEntity.getComments()).ifPresent(existingProcedure::setComments);
+            Optional.ofNullable(procedureEntity.getOnBills()).ifPresent(existingProcedure::setOnBills);
+            return existingProcedure;
+        });
+    }
 }

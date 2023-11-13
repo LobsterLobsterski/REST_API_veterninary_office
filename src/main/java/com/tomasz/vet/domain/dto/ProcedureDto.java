@@ -18,7 +18,7 @@ public class ProcedureDto {
     private Long id;
 
     private String name;
-    private float cost;
+    private Float cost;
     private String comments;
 
     private Set<BillDto> onBills = new HashSet<>();

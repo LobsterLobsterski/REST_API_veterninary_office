@@ -61,4 +61,14 @@ public class ProcedureController {
         return new ResponseEntity<>(procedureMapper.mapTo(result.get()), HttpStatus.OK);
     }
 
+    @PatchMapping("/procedure/{id}")
+    public ResponseEntity<ProcedureDto> partialUpdate(@PathVariable Long id, @RequestBody ProcedureDto procedureDto){
+        ProcedureEntity procedureEntity = procedureMapper.mapFrom(procedureDto);
+        Optional<ProcedureEntity> result = procedureService.partialUpdate(id, procedureEntity);
+        if (result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(procedureMapper.mapTo(result.get()), HttpStatus.OK);
+    }
+
 }

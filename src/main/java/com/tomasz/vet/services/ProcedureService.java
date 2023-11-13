@@ -14,4 +14,6 @@ public interface ProcedureService {
     Optional<ProcedureEntity> findOne(Long id);
 
     Optional<ProcedureEntity> fullUpdate(Long id, ProcedureEntity procedureEntity);
+
+    Optional<ProcedureEntity> partialUpdate(Long id, ProcedureEntity procedureEntity);
 }

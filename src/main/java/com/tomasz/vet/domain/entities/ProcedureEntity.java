@@ -22,7 +22,7 @@ public class ProcedureEntity {
     private Long id;
 
     private String name;
-    private float cost;
+    private Float cost;
     private String comments;
 
     @ManyToMany(mappedBy = "proceduresBilled")

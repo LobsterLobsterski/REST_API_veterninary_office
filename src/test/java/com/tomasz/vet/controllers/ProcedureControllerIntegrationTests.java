@@ -118,4 +118,62 @@ public class ProcedureControllerIntegrationTests {
 
         );
     }
+    
+    @Test
+    public void testThatFullUpdateProcedureReturnsHttp200WhenExists() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        ProcedureEntity procedureB = TestDataUtil.createProcedureB(null);
+        procedureB.setName("UPDATED");
+        String json = objectMapper.writeValueAsString(procedureB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+
+        ).andExpect(MockMvcResultMatchers.status().isOk()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateProcedureReturnsHttp404WhenDoesntExists() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+//        ProcedureEntity saved = procedureService.create(procedureA);
+
+        ProcedureEntity procedureB = TestDataUtil.createProcedureB(null);
+        procedureB.setName("UPDATED");
+        String json = objectMapper.writeValueAsString(procedureB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/procedure/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void testThatFullUpdateProcedureReturnsUpdatedProcedure() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        ProcedureEntity procedureB = TestDataUtil.createProcedureB(null);
+        procedureB.setName("UPDATED");
+        String json = objectMapper.writeValueAsString(procedureB);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.id").value(saved.getId())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.name").value(procedureB.getName())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.cost").value(procedureB.getCost())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.comments").value(procedureB.getComments())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.onBills").value(procedureB.getOnBills())
+
+        );
+    }
+
+
 }

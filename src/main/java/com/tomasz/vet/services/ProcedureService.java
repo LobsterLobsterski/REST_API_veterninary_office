@@ -12,4 +12,6 @@ public interface ProcedureService {
     Page<ProcedureEntity> findAll(Pageable pageable);
 
     Optional<ProcedureEntity> findOne(Long id);
+
+    Optional<ProcedureEntity> fullUpdate(Long id, ProcedureEntity procedureEntity);
 }

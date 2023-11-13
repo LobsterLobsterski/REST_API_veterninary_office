@@ -32,4 +32,13 @@ public class ProcedureServiceImpl implements ProcedureService {
     public Optional<ProcedureEntity> findOne(Long id) {
         return procedureRepository.findById(id);
     }
+
+    @Override
+    public Optional<ProcedureEntity> fullUpdate(Long id, ProcedureEntity procedureEntity) {
+        if (!procedureRepository.existsById(id)){
+            return Optional.empty();
+        }
+        procedureEntity.setId(id);
+        return Optional.of(procedureRepository.save(procedureEntity));
+    }
 }

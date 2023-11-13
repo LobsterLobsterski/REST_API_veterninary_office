@@ -60,4 +60,21 @@ public class ProcedureControllerIntegrationTests {
 
         );
     }
+
+    @Test
+    public void testThatFindAllProceduresReturnsAPageOfProcedures() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/procedure")
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").value(saved.getId())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value(saved.getName())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].cost").value(saved.getCost())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].comments").value(saved.getComments())
+        ).andExpect(MockMvcResultMatchers.jsonPath("$.content[0].onBills").isArray()
+
+        );
+    }
 }

@@ -16,4 +16,6 @@ public interface ProcedureService {
     Optional<ProcedureEntity> fullUpdate(Long id, ProcedureEntity procedureEntity);
 
     Optional<ProcedureEntity> partialUpdate(Long id, ProcedureEntity procedureEntity);
+
+    void delete(Long id);
 }

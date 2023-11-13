@@ -71,4 +71,9 @@ public class ProcedureController {
         return new ResponseEntity<>(procedureMapper.mapTo(result.get()), HttpStatus.OK);
     }
 
+    @DeleteMapping("/procedure/{id}")
+    public void deleteProcedure(@PathVariable Long id){
+        procedureService.delete(id);
+    }
+
 }

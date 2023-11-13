@@ -57,4 +57,9 @@ public class ProcedureServiceImpl implements ProcedureService {
             return existingProcedure;
         });
     }
+
+    @Override
+    public void delete(Long id) {
+        procedureRepository.deleteById(id);
+    }
 }

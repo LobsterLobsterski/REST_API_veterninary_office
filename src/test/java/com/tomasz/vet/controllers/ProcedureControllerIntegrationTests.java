@@ -227,5 +227,20 @@ public class ProcedureControllerIntegrationTests {
 
         );
     }
-    
+
+    @Test
+    public void testThatDeleteProcedureRemovesProcedureFromDatabase() throws Exception {
+        ProcedureEntity procedureA = TestDataUtil.createProcedureA(null);
+        ProcedureEntity saved = procedureService.create(procedureA);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/procedure/"+saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+
+        ).andExpect(MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
 }
